@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/Home">Expense Tracker</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu"">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMenu">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <!-- Maintenance -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Maintenance</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/ExpenseTypes">Expense Types</a></li>
+                        <li><a class="dropdown-item" href="/MonetaryFunds">Monetary Funds</a></li>
+                    </ul>
+                </li>
+
+                <!-- Movements -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Movements</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/Budgets">Budget per Expense Type</a></li>
+                        <li><a class="dropdown-item" href="/Expenses">Expense Records</a></li>
+                        <li><a class="dropdown-item" href="/Deposits">Deposits</a></li>
+                    </ul>
+                </li>
+
+                <!-- Reports -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Reports</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/Reports/Movements">Movements Report</a></li>
+                        <li><a class="dropdown-item" href="/Reports/BudgetExecutionChart">Budget vs Execution Chart</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- Right section -->
+            <ul class="navbar-nav ms-auto">
+                @if (HttpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated == true)
+                {
+                    <li class="nav-item">
+                        <span class="nav-link">Welcome, @HttpContextAccessor.HttpContext.User.Identity.Name</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="/Logout">Logout</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>

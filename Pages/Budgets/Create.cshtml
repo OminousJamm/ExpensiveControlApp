@@ -1,0 +1,57 @@
+﻿@page
+@model ExpensiveControlApp.Pages.Budgets.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Budget</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Budget.ExpenseTypeId" class="control-label"></label>
+                <select asp-for="Budget.ExpenseTypeId" class="form-control" asp-items="ViewBag.ExpenseTypeId"></select>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Budget.MonetaryFundId" class="control-label"></label>
+                <select asp-for="Budget.MonetaryFundId" class ="form-control" asp-items="ViewBag.MonetaryFundId"></select>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Budget.Month" class="control-label"></label>
+                <input asp-for="Budget.Month" class="form-control" />
+                <span asp-validation-for="Budget.Month" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Budget.Year" class="control-label"></label>
+                <input asp-for="Budget.Year" class="form-control" />
+                <span asp-validation-for="Budget.Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Budget.Amount" class="control-label"></label>
+                <input asp-for="Budget.Amount" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="Budget.Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

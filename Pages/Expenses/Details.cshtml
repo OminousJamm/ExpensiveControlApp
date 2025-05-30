@@ -1,0 +1,57 @@
+﻿@page "{id:int}"
+@model ExpensiveControlApp.Pages.Expenses.DetailsModel
+
+@{
+    ViewData["Title"] = "Detalle del Gasto";
+}
+
+<h1>Detalle del Gasto</h1>
+
+<div class="mb-3">
+    <dl class="row">
+        <dt class="col-sm-3">Fecha:</dt>
+        <dd class="col-sm-9">@Model.ExpenseHeader.Date.ToShortDateString()</dd>
+
+        <dt class="col-sm-3">Fondo Monetario:</dt>
+        <dd class="col-sm-9">@Model.ExpenseHeader.MonetaryFund?.Name</dd>
+
+        <dt class="col-sm-3">Nombre del Comercio:</dt>
+        <dd class="col-sm-9">@Model.ExpenseHeader.CommerceName</dd>
+
+        <dt class="col-sm-3">Tipo de Documento:</dt>
+        <dd class="col-sm-9">@Model.ExpenseHeader.DocumentType</dd>
+
+        <dt class="col-sm-3">Observaciones:</dt>
+        <dd class="col-sm-9">@Model.ExpenseHeader.Observations</dd>
+    </dl>
+</div>
+
+<h4>Detalle de Gastos</h4>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Tipo de Gasto</th>
+            <th>Monto</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ExpenseHeader.Details)
+        {
+            <tr>
+                <td>@item.ExpenseType?.Name</td>
+                <td>@item.Amount.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td class="text-end fw-bold">Total:</td>
+            <td class="fw-bold">@Model.ExpenseHeader.Details.Sum(d => d.Amount).ToString("C")</td>
+        </tr>
+    </tfoot>
+</table>
+
+<div>
+    <a asp-page="Index" class="btn btn-secondary">Volver a la lista</a>
+</div>
