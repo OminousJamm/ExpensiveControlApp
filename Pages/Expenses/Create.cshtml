@@ -1,10 +1,28 @@
 ﻿@page
+@using ExpensiveControlApp.Models
 @model ExpensiveControlApp.Pages.Expenses.CreateModel
 @{
     ViewData["Title"] = "Registrar Gasto";
 }
 
 <h1>Registrar Gasto</h1>
+@if (ViewData["OverbudgetWarnings"] is List<OverbudgetWarning> warnings && warnings.Any())
+{
+    <div class="alert alert-warning">
+        <strong>¡Presupuesto sobregirado!</strong>
+        <ul>
+            @foreach (var w in warnings)
+            {
+                <li>
+                    Tipo: <strong>@w.ExpenseTypeName</strong> |
+                    Presupuesto: @w.BudgetedAmount.ToString("C") |
+                    Ejecutado: @w.ExecutedAmount.ToString("C") |
+                    Exceso: @w.OverAmount.ToString("C")
+                </li>
+            }
+        </ul>
+    </div>
+}
 <hr />
 <form method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>

@@ -17,8 +17,6 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
-    <Folder Include="Pages\Charts\" />
-    <Folder Include="Pages\Reports\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

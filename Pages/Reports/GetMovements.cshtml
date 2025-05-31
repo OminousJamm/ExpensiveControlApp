@@ -1,0 +1,53 @@
+﻿@page
+@model ExpensiveControlApp.Pages.Reports.GetMovementsModel
+@{
+    ViewData["Title"] = "Consulta de Movimientos";
+}
+
+<h1 class="mb-4">Consulta de Movimientos</h1>
+
+<form method="post" class="row g-3 mb-4">
+    <div class="col-md-4">
+        <label asp-for="StartDate" class="form-label">Desde</label>
+        <input asp-for="StartDate" class="form-control" type="date" />
+    </div>
+    <div class="col-md-4">
+        <label asp-for="EndDate" class="form-label">Hasta</label>
+        <input asp-for="EndDate" class="form-control" type="date" />
+    </div>
+    <div class="col-md-4 align-self-end">
+        <button type="submit" class="btn btn-primary w-100">Consultar</button>
+    </div>
+</form>
+
+@if (Model.Movements.Any())
+{
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Fecha</th>
+                <th>Tipo</th>
+                <th>Monto</th>
+                <th>Observaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Movements)
+            {
+                <tr>
+                    <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                    <td>@item.Type</td>
+                    <td class="text-end">@item.Amount.ToString("C")</td>
+                    <td>@item.Description</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (Model.Request.HasFormContentType)
+{
+    <div class="alert alert-warning">
+        No se encontraron movimientos en el rango de fechas seleccionado.
+    </div>
+}

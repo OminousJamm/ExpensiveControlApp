@@ -18,6 +18,7 @@ builder.Services.AddScoped<IMonetaryFundService, MonetaryFundService>();
 builder.Services.AddScoped<IBudgetService, BudgetService>();
 builder.Services.AddScoped<IExpenseService, ExpenseService>();
 builder.Services.AddScoped<IDepositService, DepositService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 
 
 // Add services to the container.

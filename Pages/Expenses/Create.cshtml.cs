@@ -44,7 +44,13 @@ namespace ExpensiveControlApp.Pages.Expenses
                 return Page();
             }
 
-            await _expenseService.CreateAsync(ExpenseHeader);
+            var warnings = await _expenseService.CreateAsync(ExpenseHeader);
+
+            if (warnings.Any())
+            {
+                ViewData["OverbudgetWarnings"] = warnings;
+            }
+
             return RedirectToPage("/Expenses/Index");
         }
 
