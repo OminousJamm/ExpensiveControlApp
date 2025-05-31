@@ -1,12 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
-@{
-}
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/Home">Expense Tracker</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu"">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -14,7 +12,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <!-- Maintenance -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Maintenance</a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Maintenance</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/ExpenseTypes">Expense Types</a></li>
                         <li><a class="dropdown-item" href="/MonetaryFunds">Monetary Funds</a></li>
@@ -23,7 +21,7 @@
 
                 <!-- Movements -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Movements</a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Movements</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/Budgets">Budget per Expense Type</a></li>
                         <li><a class="dropdown-item" href="/Expenses">Expense Records</a></li>
@@ -33,7 +31,7 @@
 
                 <!-- Reports -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Reports</a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Reports</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/Reports/GetMovements">Movements Report</a></li>
                         <li><a class="dropdown-item" href="/Reports/BudgetExecutionChart">Budget vs Execution Chart</a></li>
@@ -49,7 +47,7 @@
                         <span class="nav-link">Welcome, @HttpContextAccessor.HttpContext.User.Identity.Name</span>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-danger" href="/Logout">Logout</a>
+                        <a class="nav-link text-danger" href="/logout">Logout</a>
                     </li>
                 }
             </ul>

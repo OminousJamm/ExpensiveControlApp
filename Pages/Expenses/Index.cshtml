@@ -5,38 +5,50 @@
     ViewData["Title"] = "Registros de Gastos";
 }
 
-<h1>Registros de Gastos</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">Registros de Gastos</h1>
 
-<p>
-    <a asp-page="Create" class="btn btn-primary">Registrar Nuevo Gasto</a>
-</p>
+    <div class="mb-3">
+        <a asp-page="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Registrar Nuevo Gasto
+        </a>
+    </div>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Fecha</th>
-            <th>Fondo Monetario</th>
-            <th>Comercio</th>
-            <th>Tipo de Documento</th>
-            <th>Total</th>
-            <th>Opciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.ExpenseHeaders)
-        {
-            <tr>
-                <td>@item.Date.ToShortDateString()</td>
-                <td>@item.MonetaryFund?.Name</td>
-                <td>@item.CommerceName</td>
-                <td>@item.DocumentType</td>
-                <td>@item.Details.Sum(d => d.Amount).ToString("C")</td>
-                <td>
-                    <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Ver</a>
-                    <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Editar</a>
-                    <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Eliminar</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Fondo Monetario</th>
+                    <th>Comercio</th>
+                    <th>Tipo de Documento</th>
+                    <th class="text-end">Total</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ExpenseHeaders)
+                {
+                    <tr>
+                        <td>@item.Date.ToShortDateString()</td>
+                        <td>@item.MonetaryFund?.Name</td>
+                        <td>@item.CommerceName</td>
+                        <td>@item.DocumentType</td>
+                        <td class="text-end">@item.Details.Sum(d => d.Amount).ToString("C")</td>
+                        <td>
+                            <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info" title="Ver Detalle">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning" title="Editar">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger" title="Eliminar">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

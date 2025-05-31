@@ -1,5 +1,61 @@
 ﻿@page
 @model ExpensiveControlApp.Pages.Reports.BudgetExecutionChartModel
 @{
+    ViewData["Title"] = "Ejecución Presupuestaria";
 }
-<h1>Works here!</h1>
+
+<h2>Ejecución Presupuestaria por Tipo de Gasto</h2>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-4">
+        <label class="form-label">Desde</label>
+        <input type="date" name="From" value="@Model.From.ToString("yyyy-MM-dd")" class="form-control" />
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Hasta</label>
+        <input type="date" name="To" value="@Model.To.ToString("yyyy-MM-dd")" class="form-control" />
+    </div>
+    <div class="col-md-4 align-self-end">
+        <button type="submit" class="btn btn-primary">Consultar</button>
+    </div>
+</form>
+
+<canvas id="budgetChart" width="800" height="400"></canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const data = {
+            labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ChartData.Select(d => d.ExpenseTypeName))),
+            datasets: [
+                {
+                    label: 'Presupuestado',
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ChartData.Select(d => d.BudgetedAmount)))
+                },
+                {
+                    label: 'Ejecutado',
+                    backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ChartData.Select(d => d.ExecutedAmount)))
+                }
+            ]
+        };
+
+        new Chart(document.getElementById('budgetChart'), {
+            type: 'bar',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Comparación de Presupuesto vs Gasto Ejecutado'
+                    }
+                }
+            }
+        });
+    </script>
+}

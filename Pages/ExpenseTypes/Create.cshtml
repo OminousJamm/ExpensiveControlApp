@@ -2,38 +2,36 @@
 @model ExpensiveControlApp.Pages.ExpenseTypes.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Tipo de Gasto";
 }
 
-<h1>Create</h1>
+<h1 class="mb-4">Crear Nuevo Tipo de Gasto</h1>
 
-<h4>ExpenseType</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ExpenseType.Name" class="control-label"></label>
+    <div class="col-md-6 col-lg-4">
+        <form method="post" novalidate>
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="ExpenseType.Name" class="form-label"></label>
                 <input asp-for="ExpenseType.Name" class="form-control" />
                 <span asp-validation-for="ExpenseType.Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ExpenseType.Description" class="control-label"></label>
+
+            <div class="mb-3">
+                <label asp-for="ExpenseType.Description" class="form-label"></label>
                 <input asp-for="ExpenseType.Description" class="form-control" />
                 <span asp-validation-for="ExpenseType.Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+
+            <button type="submit" class="btn btn-primary">Crear</button>
+            <a asp-page="Index" class="btn btn-secondary ms-2">Volver a la lista</a>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

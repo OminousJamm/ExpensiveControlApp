@@ -1,87 +1,110 @@
 ﻿@page "{id:int}"
 @using ExpensiveControlApp.Enums
 @model ExpensiveControlApp.Pages.Expenses.EditModel
+
 @{
     ViewData["Title"] = "Editar Gasto";
     var details = Model.ExpenseHeader.Details?.ToList() ?? new List<ExpensiveControlApp.Models.ExpenseDetail>();
 }
 
-<h1>Editar Gasto</h1>
+<div class="container mt-4">
+    <h2 class="mb-4"><i class="bi bi-pencil-square"></i> Editar Gasto</h2>
 
-<form method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="ExpenseHeader.Id" />
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+        <input type="hidden" asp-for="ExpenseHeader.Id" />
 
-    <div class="form-group">
-        <label asp-for="ExpenseHeader.Date"></label>
-        <input asp-for="ExpenseHeader.Date" class="form-control" type="date" />
-        <span asp-validation-for="ExpenseHeader.Date" class="text-danger"></span>
-    </div>
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white fw-bold">Información General</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label asp-for="ExpenseHeader.Date" class="form-label"></label>
+                    <input asp-for="ExpenseHeader.Date" class="form-control" type="date" />
+                    <span asp-validation-for="ExpenseHeader.Date" class="text-danger"></span>
+                </div>
 
-    <div class="form-group">
-        <label asp-for="ExpenseHeader.MonetaryFundId"></label>
-        <select asp-for="ExpenseHeader.MonetaryFundId" class="form-control" asp-items="Model.Funds"></select>
-        <span asp-validation-for="ExpenseHeader.MonetaryFundId" class="text-danger"></span>
-    </div>
+                <div class="mb-3">
+                    <label asp-for="ExpenseHeader.MonetaryFundId" class="form-label"></label>
+                    <select asp-for="ExpenseHeader.MonetaryFundId" class="form-select" asp-items="Model.Funds"></select>
+                    <span asp-validation-for="ExpenseHeader.MonetaryFundId" class="text-danger"></span>
+                </div>
 
-    <div class="form-group">
-        <label asp-for="ExpenseHeader.CommerceName"></label>
-        <input asp-for="ExpenseHeader.CommerceName" class="form-control" />
-        <span asp-validation-for="ExpenseHeader.CommerceName" class="text-danger"></span>
-    </div>
+                <div class="mb-3">
+                    <label asp-for="ExpenseHeader.CommerceName" class="form-label"></label>
+                    <input asp-for="ExpenseHeader.CommerceName" class="form-control" />
+                    <span asp-validation-for="ExpenseHeader.CommerceName" class="text-danger"></span>
+                </div>
 
-    <div class="form-group">
-        <label asp-for="ExpenseHeader.DocumentType"></label>
-        <select asp-for="ExpenseHeader.DocumentType" class="form-control"
-                asp-items="Html.GetEnumSelectList<DocumentType>()"></select>
-        <span asp-validation-for="ExpenseHeader.DocumentType" class="text-danger"></span>
-    </div>
+                <div class="mb-3">
+                    <label asp-for="ExpenseHeader.DocumentType" class="form-label"></label>
+                    <select asp-for="ExpenseHeader.DocumentType" class="form-select"
+                            asp-items="Html.GetEnumSelectList<DocumentType>()"></select>
+                    <span asp-validation-for="ExpenseHeader.DocumentType" class="text-danger"></span>
+                </div>
 
-    <div class="form-group">
-        <label asp-for="ExpenseHeader.Observations"></label>
-        <textarea asp-for="ExpenseHeader.Observations" class="form-control"></textarea>
-        <span asp-validation-for="ExpenseHeader.Observations" class="text-danger"></span>
-    </div>
+                <div class="mb-3">
+                    <label asp-for="ExpenseHeader.Observations" class="form-label"></label>
+                    <textarea asp-for="ExpenseHeader.Observations" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="ExpenseHeader.Observations" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
 
-    <h4>Detalles</h4>
-    <table class="table" id="details-table">
-        <thead>
-            <tr>
-                <th>Tipo de Gasto</th>
-                <th>Monto</th>
-                <th>Acción</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (int i = 0; i < details.Count; i++)
-            {
-                <tr>
-                    <td>
-                        <select class="form-control" name="ExpenseHeader.Details[@i].ExpenseTypeId">
-                            @foreach (var item in Model.Types)
-                            {
-                                <option value="@item.Value" selected="@(item.Value == details[i].ExpenseTypeId.ToString())">
-                                    @item.Text
-                                </option>
-                            }
-                        </select>
-                    </td>
-                    <td>
-                        <input class="form-control" name="ExpenseHeader.Details[@i].Amount" value="@details[i].Amount" />
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Eliminar</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        <div class="card mb-4">
+            <div class="card-header bg-secondary text-white fw-bold">Detalles de Gasto</div>
+            <div class="card-body p-0">
+                <table class="table table-bordered table-striped mb-0" id="details-table">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Tipo de Gasto</th>
+                            <th>Monto</th>
+                            <th class="text-center">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < details.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <select class="form-select" name="ExpenseHeader.Details[@i].ExpenseTypeId">
+                                        @foreach (var item in Model.Types)
+                                        {
+                                            <option value="@item.Value" selected="@(item.Value == details[i].ExpenseTypeId.ToString())">
+                                                @item.Text
+                                            </option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <input class="form-control" name="ExpenseHeader.Details[@i].Amount" value="@details[i].Amount" type="number" step="0.01" />
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeRow(this)">
+                                        <i class="bi bi-x-circle"></i> Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-outline-secondary" onclick="addRow()">
+                    <i class="bi bi-plus-circle"></i> Agregar Detalle
+                </button>
+            </div>
+        </div>
 
-    <button type="button" class="btn btn-secondary" onclick="addRow()">Agregar Detalle</button>
-    <br /><br />
-    <input type="submit" value="Guardar" class="btn btn-primary" />
-    <a asp-page="Index" class="btn btn-secondary">Cancelar</a>
-</form>
+        <div class="d-flex justify-content-between">
+            <a asp-page="Index" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Cancelar
+            </a>
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-save"></i> Guardar
+            </button>
+        </div>
+    </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
@@ -95,18 +118,20 @@
             const row = `
                 <tr>
                     <td>
-                        <select name="ExpenseHeader.Details[${index}].ExpenseTypeId" class="form-control">
-        @foreach (var item in Model.Types)
-        {
+                        <select name="ExpenseHeader.Details[${index}].ExpenseTypeId" class="form-select">
+                            @foreach (var item in Model.Types)
+                            {
                                     <option value="@item.Value">@item.Text</option>
-        }
+                            }
                         </select>
                     </td>
                     <td>
-                        <input name="ExpenseHeader.Details[${index}].Amount" class="form-control" />
+                        <input name="ExpenseHeader.Details[${index}].Amount" class="form-control" type="number" step="0.01" />
                     </td>
-                    <td>
-                        <button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Eliminar</button>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeRow(this)">
+                            <i class="bi bi-x-circle"></i> Eliminar
+                        </button>
                     </td>
                 </tr>`;
             $('#details-table tbody').append(row);

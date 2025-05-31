@@ -1,4 +1,8 @@
 ﻿@if (User.Identity?.IsAuthenticated == true)
 {
-    <a href="/login">Logout</a>
+    <a class="nav-link text-danger" href="/Login/Index.cshtml">Logout</a>
+}
+else
+{
+    <a class="nav-link" href="/Login/Index.cshtml">Login</a>
 }

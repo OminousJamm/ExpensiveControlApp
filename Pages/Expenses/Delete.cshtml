@@ -4,31 +4,36 @@
     ViewData["Title"] = "Eliminar Gasto";
 }
 
-<h1>¿Está seguro de que desea eliminar este registro?</h1>
+<div class="container mt-4">
+    <h2 class="text-danger mb-4"><i class="bi bi-trash-fill"></i> ¿Está seguro que desea eliminar este gasto?</h2>
 
-<div>
-    <h4>Gasto</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-3">Fecha</dt>
-        <dd class="col-sm-9">@Model.ExpenseHeader.Date.ToShortDateString()</dd>
+    <div class="card border-danger mb-4">
+        <div class="card-header bg-danger text-white fw-bold">
+            Información del Gasto
+        </div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-3">Fecha</dt>
+                <dd class="col-sm-9">@Model.ExpenseHeader.Date.ToShortDateString()</dd>
 
-        <dt class="col-sm-3">Fondo Monetario</dt>
-        <dd class="col-sm-9">@Model.ExpenseHeader.MonetaryFund?.Name</dd>
+                <dt class="col-sm-3">Fondo Monetario</dt>
+                <dd class="col-sm-9">@Model.ExpenseHeader.MonetaryFund?.Name</dd>
 
-        <dt class="col-sm-3">Comercio</dt>
-        <dd class="col-sm-9">@Model.ExpenseHeader.CommerceName</dd>
+                <dt class="col-sm-3">Comercio</dt>
+                <dd class="col-sm-9">@Model.ExpenseHeader.CommerceName</dd>
 
-        <dt class="col-sm-3">Tipo Documento</dt>
-        <dd class="col-sm-9">@Model.ExpenseHeader.DocumentType</dd>
+                <dt class="col-sm-3">Tipo Documento</dt>
+                <dd class="col-sm-9">@Model.ExpenseHeader.DocumentType</dd>
 
-        <dt class="col-sm-3">Observaciones</dt>
-        <dd class="col-sm-9">@Model.ExpenseHeader.Observations</dd>
-    </dl>
+                <dt class="col-sm-3">Observaciones</dt>
+                <dd class="col-sm-9">@Model.ExpenseHeader.Observations</dd>
+            </dl>
+        </div>
+    </div>
 
-    <h5>Detalles</h5>
-    <table class="table">
-        <thead>
+    <h5 class="mb-3">Detalles del Gasto</h5>
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
             <tr>
                 <th>Tipo de Gasto</th>
                 <th>Monto</th>
@@ -45,9 +50,11 @@
         </tbody>
     </table>
 
-    <form method="post">
+    <form method="post" class="mt-4">
         <input type="hidden" asp-for="ExpenseHeader.Id" />
-        <input type="submit" value="Eliminar" class="btn btn-danger" />
-        <a asp-page="Index" class="btn btn-secondary">Cancelar</a>
+        <div class="d-flex gap-3">
+            <input type="submit" value="Eliminar definitivamente" class="btn btn-danger" />
+            <a asp-page="Index" class="btn btn-secondary">Cancelar</a>
+        </div>
     </form>
 </div>

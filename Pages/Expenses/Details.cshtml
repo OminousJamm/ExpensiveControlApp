@@ -5,53 +5,65 @@
     ViewData["Title"] = "Detalle del Gasto";
 }
 
-<h1>Detalle del Gasto</h1>
+<div class="container mt-4">
+    <h2 class="mb-4"><i class="bi bi-receipt"></i> Detalle del Gasto</h2>
 
-<div class="mb-3">
-    <dl class="row">
-        <dt class="col-sm-3">Fecha:</dt>
-        <dd class="col-sm-9">@Model.ExpenseHeader.Date.ToShortDateString()</dd>
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white fw-bold">
+            Información General
+        </div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-4">Fecha:</dt>
+                <dd class="col-sm-8">@Model.ExpenseHeader.Date.ToShortDateString()</dd>
 
-        <dt class="col-sm-3">Fondo Monetario:</dt>
-        <dd class="col-sm-9">@Model.ExpenseHeader.MonetaryFund?.Name</dd>
+                <dt class="col-sm-4">Fondo Monetario:</dt>
+                <dd class="col-sm-8">@Model.ExpenseHeader.MonetaryFund?.Name</dd>
 
-        <dt class="col-sm-3">Nombre del Comercio:</dt>
-        <dd class="col-sm-9">@Model.ExpenseHeader.CommerceName</dd>
+                <dt class="col-sm-4">Nombre del Comercio:</dt>
+                <dd class="col-sm-8">@Model.ExpenseHeader.CommerceName</dd>
 
-        <dt class="col-sm-3">Tipo de Documento:</dt>
-        <dd class="col-sm-9">@Model.ExpenseHeader.DocumentType</dd>
+                <dt class="col-sm-4">Tipo de Documento:</dt>
+                <dd class="col-sm-8">@Model.ExpenseHeader.DocumentType</dd>
 
-        <dt class="col-sm-3">Observaciones:</dt>
-        <dd class="col-sm-9">@Model.ExpenseHeader.Observations</dd>
-    </dl>
-</div>
+                <dt class="col-sm-4">Observaciones:</dt>
+                <dd class="col-sm-8">@Model.ExpenseHeader.Observations</dd>
+            </dl>
+        </div>
+    </div>
 
-<h4>Detalle de Gastos</h4>
+    <div class="card mb-4">
+        <div class="card-header bg-secondary text-white fw-bold">
+            Detalle de Gastos
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-bordered table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Tipo de Gasto</th>
+                        <th>Monto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ExpenseHeader.Details)
+                    {
+                        <tr>
+                            <td>@item.ExpenseType?.Name</td>
+                            <td>@item.Amount.ToString("C")</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr class="table-secondary fw-bold">
+                        <td class="text-end">Total:</td>
+                        <td>@Model.ExpenseHeader.Details.Sum(d => d.Amount).ToString("C")</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Tipo de Gasto</th>
-            <th>Monto</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.ExpenseHeader.Details)
-        {
-            <tr>
-                <td>@item.ExpenseType?.Name</td>
-                <td>@item.Amount.ToString("C")</td>
-            </tr>
-        }
-    </tbody>
-    <tfoot>
-        <tr>
-            <td class="text-end fw-bold">Total:</td>
-            <td class="fw-bold">@Model.ExpenseHeader.Details.Sum(d => d.Amount).ToString("C")</td>
-        </tr>
-    </tfoot>
-</table>
-
-<div>
-    <a asp-page="Index" class="btn btn-secondary">Volver a la lista</a>
+    <a asp-page="Index" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Volver a la lista
+    </a>
 </div>
