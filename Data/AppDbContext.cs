@@ -12,8 +12,6 @@ namespace ExpensiveControlApp.Data
         public DbSet<ExpenseHeader> ExpenseHeaders { get; set; }
         public DbSet<ExpenseDetail> ExpenseDetails { get; set; }
         public DbSet<Deposit> Deposits { get; set; }
-
-
     }
 
 }

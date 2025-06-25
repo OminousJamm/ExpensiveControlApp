@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace ExpensiveControlApp.Data.Migrations
+namespace ExpensiveControlApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250530020451_AddExpenses")]
-    partial class AddExpenses
+    [Migration("20250625031828_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,6 +55,30 @@ namespace ExpensiveControlApp.Data.Migrations
                     b.HasIndex("MonetaryFundId");
 
                     b.ToTable("Budgets");
+                });
+
+            modelBuilder.Entity("ExpensiveControlApp.Models.Deposit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MonetaryFundId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MonetaryFundId");
+
+                    b.ToTable("Deposits");
                 });
 
             modelBuilder.Entity("ExpensiveControlApp.Models.ExpenseDetail", b =>
@@ -176,6 +200,17 @@ namespace ExpensiveControlApp.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("ExpenseType");
+
+                    b.Navigation("MonetaryFund");
+                });
+
+            modelBuilder.Entity("ExpensiveControlApp.Models.Deposit", b =>
+                {
+                    b.HasOne("ExpensiveControlApp.Models.MonetaryFund", "MonetaryFund")
+                        .WithMany()
+                        .HasForeignKey("MonetaryFundId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("MonetaryFund");
                 });
